@@ -1,0 +1,108 @@
+//---------------------------------------------------------
+// Dropper
+// Compact drop menu (plain JS)
+// @author Paul Woods (http://github.com/woodscreative)
+// @version 1.0.0
+//---------------------------------------------------------
+
+$dropper : (
+  width : 300px,
+  height: 200px,
+  radius : 0,
+  stroke : 2px,
+  bg-color : #fff,
+  fg-color : #333,
+  secondary-bg-color : #66cc33,
+  secondary-fg-color : #333
+);
+@function dropper($k) {
+  @return map-get($dropper,$k);
+};
+
+.dropper {
+  position: relative;
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 1px 0;
+  width: dropper(width);
+  > a {
+    border-bottom: 1px solid dropper(bg-color);
+  }
+  a {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 1em 1em;
+    background-color: dropper(bg-color);
+    color: dropper(fg-color);
+    transition: all 250ms;
+  }
+  &.dropper--is-open {
+    > a {
+      border-bottom: 1px solid darken(dropper(bg-color),10%);
+    }
+  }
+}
+.dropper-icon {
+  $width: .75em;
+  position: absolute;
+  display: inline-block;
+  box-sizing: border-box;
+  line-height: 1;
+  vertical-align: middle;
+  right: 1em;
+  width: 1em;
+  height: 1em;
+  transition: all 250ms;
+  &:before {
+    display: inline-block;
+    content: '';
+    vertical-align: middle;
+    border-right: dropper(stroke) solid dropper(fg-color);
+    border-top: dropper(stroke) solid dropper(fg-color);
+    height: .5em;
+    width: .5em;
+    -webkit-transform: rotate(135deg) translateX(-50%);
+    -ms-transform: rotate(135deg) translateX(-50%);
+    transform: rotate(135deg) translateX(-50%);
+    //@include transform(rotate(135deg) translateX(-50%));
+  }
+  .dropper--is-open & {
+    -webkit-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    //@include transform(rotate(-180deg));
+  }
+}
+.dropper-menu {
+  z-index: 999;
+  position: absolute;
+  display: none;
+  width: 100%;
+  height: dropper(height);
+  overflow-y: auto;
+  margin: auto;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  background-color: dropper(bg-color);
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: inside none;
+    a {
+      color: dropper(fg-color);
+    }
+    a:focus,
+    a:hover {
+      background-color: dropper(secondary-bg-color);
+      color: dropper(secondary-fg-color);
+    }
+  }
+  .dropper--is-open & {
+    display: block;
+  }
+}
